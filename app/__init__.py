@@ -16,11 +16,6 @@ def create_app():
     app.register_blueprint(health_bp)
 
     db.init_app(app)
-    # with app.app_context():
-    #     try:
-    #         db.create_all()
-    #     except Exception as e:
-    #         print(f"Database setup notice: {e}", flush=True)
     
     with app.app_context():
         retry_delay = 3

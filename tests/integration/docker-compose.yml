@@ -1,0 +1,36 @@
+networks:
+  integration-net:
+    external: true
+
+services:
+  inventory-db:
+    container_name: inventory-db
+    image: killux3k/postgres-db:1.0.0
+    environment:
+      DB_USER: inventory
+      DB_PASS: inventory
+      DB_NAME: inventory
+    networks:
+      - integration-net
+    ports:
+      - "5432:5432"
+  
+  inventory-app:
+    container_name: inventory-app
+    image: inventory-app
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    environment:
+      INVENTORY_DB_USER: inventory
+      INVENTORY_DB_PASS: inventory
+      INVENTORY_DB_NAME: inventory
+      INVENTORY_DB_HOST: inventory-db
+
+      INVENTORY_APP_PORT: 8000
+    networks:
+      - integration-net
+    ports:
+      - "8000:8000"
+    depends_on:
+      - inventory-db

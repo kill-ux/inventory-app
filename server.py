@@ -1,3 +1,5 @@
+import os
+
 from dotenv import load_dotenv
 import logging
 from waitress import serve
@@ -10,9 +12,9 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
-from app import create_app, get_env_variable
+from app import create_app
 
-INVENTORY_APP_PORT = get_env_variable("INVENTORY_APP_PORT")
+INVENTORY_APP_PORT = int(os.getenv("INVENTORY_APP_PORT"))
 
 app = create_app()
 

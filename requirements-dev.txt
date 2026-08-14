@@ -8,6 +8,10 @@ blinker==1.9.0
     # via
     #   -r requirements.txt
     #   flask
+certifi==2026.7.22
+    # via requests
+charset-normalizer==3.5.0
+    # via requests
 click==8.4.2
     # via
     #   -r requirements.txt
@@ -24,6 +28,8 @@ greenlet==3.5.5
     # via
     #   -r requirements.txt
     #   sqlalchemy
+idna==3.18
+    # via requests
 iniconfig==2.3.0
     # via pytest
 itsdangerous==2.2.0
@@ -41,7 +47,9 @@ markupsafe==3.0.3
     #   jinja2
     #   werkzeug
 packaging==26.3
-    # via pytest
+    # via
+    #   pytest
+    #   wheel
 paste==3.10.1
     # via -r requirements.txt
 pluggy==1.6.0
@@ -63,6 +71,8 @@ pytest-mock==3.15.1
     # via -r requirements-dev.in
 python-dotenv==1.2.2
     # via -r requirements.txt
+requests==2.34.2
+    # via -r requirements-dev.in
 sqlalchemy==2.0.52
     # via
     #   -r requirements.txt
@@ -71,12 +81,16 @@ typing-extensions==4.16.0
     # via
     #   -r requirements.txt
     #   sqlalchemy
+urllib3==2.7.0
+    # via requests
 waitress==3.0.2
     # via -r requirements.txt
 werkzeug==3.1.8
     # via
     #   -r requirements.txt
     #   flask
+wheel==0.48.0
+    # via -r requirements-dev.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

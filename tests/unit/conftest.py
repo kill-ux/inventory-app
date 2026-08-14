@@ -1,3 +1,4 @@
+from flask_sqlalchemy.model import _QueryProperty
 import pytest
 from pytest_mock import MockerFixture
 from app import create_app
@@ -41,3 +42,52 @@ def fake_upstream_response(mocker):
     resp.status_code = 200
     resp.headers = {"Content-Type": "application/json"}
     return resp
+
+@pytest.fixture
+def movie_data():
+    """
+    {
+        "id": 1,
+        "title": "Test Movie",
+        "description": "A test movie.",
+    }
+    """
+    return {
+        "id": 1,
+        "title": "Test Movie",
+        "description": "A test movie.",
+    }
+
+
+
+@pytest.fixture
+def mock_query(mocker):
+    return mocker.Mock()
+
+
+@pytest.fixture
+def patch_movie_query(mocker, mock_query):
+    return mocker.patch.object(
+        _QueryProperty,
+        "__get__",
+        return_value=mock_query,
+    )
+
+@pytest.fixture
+def mock_add(mocker):
+    return mocker.patch(
+        "app.routes.movies.db.session.add"
+    )
+
+@pytest.fixture
+def mock_commit(mocker):
+    return mocker.patch(
+        "app.routes.movies.db.session.commit"
+    )
+
+
+@pytest.fixture
+def mock_session_delete(mocker):
+    return mocker.patch(
+        "app.routes.movies.db.session.delete"
+    )

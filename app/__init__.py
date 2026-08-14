@@ -14,24 +14,9 @@ def create_app():
 
     app.register_blueprint(movies_bp)
     app.register_blueprint(health_bp)
-
     db.init_app(app)
-    
-    with app.app_context():
-        retry_delay = 3
-        while True:
-            try:
-                print("Attempting to connect to the database and create tables...", flush=True)
-                db.create_all()
-                print("Database tables created/verified successfully!", flush=True)
-                break  # Connection succeeded, exit the retry loop
-            except OperationalError as e:
-                print(f"Database not ready yet ({e}). Retrying in {retry_delay} seconds...", flush=True)
-                time.sleep(retry_delay)
-            except Exception as e:
-                # Catch any other unexpected critical structural errors and log them
-                print(f"Database setup notice (Unexpected error): {e}", flush=True)
-                time.sleep(retry_delay) 
+
+    connect_to_database_with_retry(app)
 
     @app.errorhandler(Exception)
     def handle_exception(e):
@@ -44,6 +29,21 @@ def create_app():
 
     return app
 
+def connect_to_database_with_retry(app, retry_delay=3):
+    with app.app_context():
+        while True:
+            try:
+                print("Attempting to connect to the database...", flush=True)
+                db.create_all()
+                print("Database connection successful!", flush=True)
+                break  # Connection succeeded, exit the retry loop$$$
+            except OperationalError as e:
+                print(f"Database not ready yet ({e}). Retrying in {retry_delay} seconds...", flush=True)
+                time.sleep(retry_delay)
+            except Exception as e:
+                # Catch any other unexpected critical structural errors and log them
+                print(f"Database setup notice (Unexpected error): {e}", flush=True)
+                time.sleep(retry_delay)
 
 import os
 
@@ -54,7 +54,7 @@ def get_env_variable(name, cast_type=str):
     """
     
     value = os.getenv(name)
-    if name is None:
+    if value is None:
         raise RuntimeError(f"CRITICAL ERROR: Environment variable '{name}' is not set.")
     try:
         return cast_type(value)

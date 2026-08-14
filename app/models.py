@@ -13,4 +13,3 @@ class Movie(db.Model):
         'title': self.title,
         'description': self.description
     }
-    

@@ -1,3 +1,1 @@
 # inventory-app
-
-test

@@ -9,7 +9,8 @@ COPY ./requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY ./app ./app
+COPY ./server.py ./server.py
 
 RUN chown -R appuser:appuser /app
 USER appuser

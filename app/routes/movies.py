@@ -54,7 +54,3 @@ def get_movie(id):
             db.session.commit()
             return '', 204
     return movie.to_dict()
-
-@movies_bp.route('/check', methods = ["GET"])
-def check():
-    return {"status": "ok", "version": "v1.1.1"}, 200

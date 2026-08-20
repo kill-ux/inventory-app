@@ -57,4 +57,4 @@ def get_movie(id):
 
 @movies_bp.route('/check', methods = ["GET"])
 def check():
-    return 200, {"status": "ok", "version": "v1.1.1"}
+    return {"status": "ok", "version": "v1.1.1"}, 200

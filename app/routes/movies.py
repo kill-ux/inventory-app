@@ -55,3 +55,6 @@ def get_movie(id):
             return '', 204
     return movie.to_dict()
 
+@movies_bp.route('/check', methods = ["GET"])
+def check():
+    return 200, {"status": "ok", "version": "v1.1.1"}
